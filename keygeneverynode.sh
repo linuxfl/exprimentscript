@@ -2,8 +2,9 @@
 user="fangling"
 password="0000"
 
-for ip in $(cat ip.list)
+for p in $(cat hostfile)
 do
+ip=$(echo "$p"|cut -f1 -d":")
 expect <<EOF
 spawn ssh $user@$ip "ssh-keygen -t rsa" 
 expect {
