@@ -1,6 +1,6 @@
 #!/bin/bash
-user="fangling"
-password="0000"
+user="root"
+password="2672256ab*"
 
 for p in $(cat hostfile)
 do
@@ -22,7 +22,7 @@ for p in $(cat hostfile)
 do
 ip=$(echo "$p"|cut -f1 -d":")
 expect <<EOF
-spawn scp $user@$ip:/home/$user/.ssh/id_rsa.pub /home/$user/.ssh/id_rsa.pub.$ip
+spawn scp $user@$ip:/root/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub.$ip
 expect {
       "yes/no" { send "yes\r";exp_continue}
       "password:" {send "$password\r";exp_continue}
@@ -33,15 +33,15 @@ done
 for p in $(cat hostfile)
 do
 ip=$(echo "$p"|cut -f1 -d":")
-    cat /home/$user/.ssh/id_rsa.pub.$ip >> /home/$user/.ssh/authorized_keys
-    rm /home/$user/.ssh/id_rsa.pub.$ip
+    cat /root/.ssh/id_rsa.pub.$ip >> /root/.ssh/authorized_keys
+    rm  /root/.ssh/id_rsa.pub.$ip
 done
 
 for p in $(cat hostfile)
 do
 ip=$(echo "$p"|cut -f1 -d":")
 expect <<EOF
-spawn scp /home/$user/.ssh/authorized_keys $user@$ip:/home/$user/.ssh/
+spawn scp /root/.ssh/authorized_keys $user@$ip:/root/.ssh/
 expect {
       "yes/no" { send "yes\r";exp_continue}
       "password:" {send "$password\r";exp_continue}
